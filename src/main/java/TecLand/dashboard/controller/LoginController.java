@@ -1,8 +1,8 @@
-package TecLand.controllers;
+package TecLand.dashboard.controller;
 
-import TecLand.Repository.UserRepository;
+import TecLand.dashboard.model.User;
+import TecLand.dashboard.repository.UserRepository;
 import TecLand.model.Response;
-import TecLand.model.User;
 import TecLand.utils.Security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;

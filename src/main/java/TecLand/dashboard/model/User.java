@@ -1,4 +1,4 @@
-package TecLand.model;
+package TecLand.dashboard.model;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 

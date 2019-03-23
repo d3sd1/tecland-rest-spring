@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-public class Application implements ApplicationListener<ApplicationReadyEvent> {
+public class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class);
+        SpringApplication.run(Bootstrap.class);
     }
 
     @Override
@@ -19,7 +19,6 @@ public class Application implements ApplicationListener<ApplicationReadyEvent> {
         for (String prof : event.getApplicationContext().getEnvironment().getActiveProfiles()) {
             System.out.println("Active profile: " + prof);
         }
-
     }
 
 }

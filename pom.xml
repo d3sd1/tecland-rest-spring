@@ -78,9 +78,15 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.4.0-b180830.0359</version>
         </dependency>
+        <dependency>
+            <groupId>com.smattme</groupId>
+            <artifactId>mysql-backup4j</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
+        <finalName>tecland</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -131,6 +137,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

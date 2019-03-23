@@ -1,4 +1,4 @@
-package com.github.websockets;
+package websocket;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

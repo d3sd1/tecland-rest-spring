@@ -1,4 +1,4 @@
-package com.github.websockets.controllers;
+package websocket.controllers;
 
 import model.Response;
 import model.User;

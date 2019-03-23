@@ -1,5 +1,6 @@
-package utils;
+package TecLand.utils;
 
+import com.lambdaworks.crypto.SCryptUtil;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,6 +11,16 @@ import java.security.Key;
 import java.util.Date;
 
 public class Security {
+
+    public boolean checkPassword(String pwd, String hash) {
+        return SCryptUtil.check(pwd, hash);
+    }
+
+    public String encodePassword(String pwd) {
+
+        return SCryptUtil.scrypt(pwd, 16, 16, 16);
+    }
+
     public String generateJWTToken(String id, String issuer, String subject, long ttlMillis, String hash) {
 
         //The JWT signature algorithm we will be using to sign the token

@@ -1,4 +1,4 @@
-package websocket.controllers;
+package TecLand.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;

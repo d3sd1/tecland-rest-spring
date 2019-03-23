@@ -1,4 +1,4 @@
-package model;
+package TecLand.model;
 
 public class Response {
     private int statusCode;

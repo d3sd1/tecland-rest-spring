@@ -1,6 +1,6 @@
 package TecLand.dashboard.controller;
 
-import TecLand.dashboard.model.User;
+import TecLand.ORM.DashUser;
 import TecLand.dashboard.repository.UserRepository;
 import TecLand.model.Response;
 import TecLand.utils.Security;
@@ -20,7 +20,7 @@ public class LoginController {
 
     @Autowired
     private UserRepository userRepository;
-    private static final String ENDPOINT = "/login";
+    private static final String ENDPOINT = "/dash/login";
 
     private final SimpMessagingTemplate template;
 
@@ -32,7 +32,7 @@ public class LoginController {
     }
 
     @MessageMapping(ENDPOINT)
-    public void onReceivedMessage(@Header("sessionId") String sessionId, @Payload User user) {
+    public void onReceivedMessage(@Header("sessionId") String sessionId, @Payload DashUser user) {
         Security sec = new Security();
         Response resp = new Response(
                 403,
@@ -41,13 +41,13 @@ public class LoginController {
         );
 
         System.out.println("New login received, checking validity: " + user.getEmail());
-        User dbUser = userRepository.findByEmail(user.getEmail());
+        DashUser dbUser = userRepository.findByEmail(user.getEmail());
         if (null != dbUser && sec.checkPassword(user.getPassword(), dbUser.getPassword())) {
-            System.out.println("User connected: " + dbUser);
+            System.out.println("DashUser connected: " + dbUser);
 
             dbUser.setLoginJWT(sec.generateJWTToken(Long.toString(dbUser.getId()), dbUser.getEmail(), "LOGIN",
                     Long.valueOf(this.env.getProperty("tecland.dashboard.session.timeout")), sessionId));
-            final User updatedUser = userRepository.save(dbUser);
+            final DashUser updatedUser = userRepository.save(dbUser);
 
             resp = new Response(
                     200,

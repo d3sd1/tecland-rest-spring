@@ -1,0 +1,1 @@
+INSERT INTO `region` VALUES (4,'Africa'),(3,'America'),(1,'Asia'),(2,'Europe'),(5,'Oceania');

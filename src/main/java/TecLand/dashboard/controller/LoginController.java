@@ -1,7 +1,7 @@
 package TecLand.dashboard.controller;
 
-import TecLand.ORM.DashUser;
-import TecLand.dashboard.repository.UserRepository;
+import TecLand.ORM.Model.DashUser;
+import TecLand.ORM.Repository.DashUserRepository;
 import TecLand.model.Response;
 import TecLand.utils.Security;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class LoginController {
     Environment env;
 
     @Autowired
-    private UserRepository userRepository;
+    private DashUserRepository dashUserRepository;
     private static final String ENDPOINT = "/dash/login";
 
     private final SimpMessagingTemplate template;
@@ -41,11 +41,12 @@ public class LoginController {
         );
 
         System.out.println("New login received, checking validity: " + user.getEmail());
-        DashUser dbUser = userRepository.findByEmail(user.getEmail());
+        DashUser dbUser = dashUserRepository.findByEmail(user.getEmail());
         if (null != dbUser && sec.checkPassword(user.getPassword(), dbUser.getPassword())) {
             System.out.println("DashUser connected: " + dbUser);
 
-            dbUser.setLoginJWT(sec.generateJWTToken(Long.toString(dbUser.getId()), dbUser.getEmail(), "LOGIN",
+            //TODO
+            /*dbUser.setLoginJWT(sec.generateJWTToken(Long.toString(dbUser.getId()), dbUser.getEmail(), "LOGIN",
                     Long.valueOf(this.env.getProperty("tecland.dashboard.session.timeout")), sessionId));
             final DashUser updatedUser = userRepository.save(dbUser);
 
@@ -53,7 +54,7 @@ public class LoginController {
                     200,
                     "SUCCESS",
                     dbUser.getLoginJWT()
-            );
+            );*/
         }
 
         template.convertAndSend(ENDPOINT + "/" + sessionId, resp);

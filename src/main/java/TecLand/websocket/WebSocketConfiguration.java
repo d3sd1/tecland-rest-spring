@@ -20,7 +20,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         StompWebSocketEndpointRegistration endpoint = registry.addEndpoint("/socket");
-        if (this.env.getProperty("env.dev").equals("true")) {
+        if (this.env.getProperty("env.dev").equals("false")) {
             endpoint.setAllowedOrigins("tecland.net");
             endpoint.setAllowedOrigins("*.tecland.net");
         } else {

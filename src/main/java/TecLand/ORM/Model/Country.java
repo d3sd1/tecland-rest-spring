@@ -1,4 +1,4 @@
-package TecLand.ORM;
+package TecLand.ORM.Model;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -9,14 +9,9 @@ import javax.persistence.*;
 @EntityListeners(AuditingEntityListener.class)
 public class Country {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private long id;
-
-    @Column(nullable = false, unique = true)
-    private String code;
-
-    @Column(nullable = false, unique = true)
-    private String displayName;
 
     @Column(nullable = false, unique = true, length = 2)
     private String alpha2;
@@ -24,10 +19,10 @@ public class Country {
     @Column(nullable = false, unique = true, length = 3)
     private String alpha3;
 
-    @Column(nullable = false, unique = true, length = 3)
-    private short countryCode;
+    @Column(nullable = false, unique = true)
+    private String displayName;
 
-    @Column(nullable = false, unique = true, length = 3)
+    @Column(nullable = false, unique = true)
     private String iso3166_2;
 
     @OneToOne()
@@ -39,22 +34,6 @@ public class Country {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
     }
 
     public String getAlpha2() {
@@ -73,12 +52,12 @@ public class Country {
         this.alpha3 = alpha3;
     }
 
-    public short getCountryCode() {
-        return countryCode;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setCountryCode(short countryCode) {
-        this.countryCode = countryCode;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getIso3166_2() {
@@ -95,5 +74,17 @@ public class Country {
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    @Override
+    public String toString() {
+        return "Country{" +
+                "id=" + id +
+                ", alpha2='" + alpha2 + '\'' +
+                ", alpha3='" + alpha3 + '\'' +
+                ", displayName='" + displayName + '\'' +
+                ", iso3166_2='" + iso3166_2 + '\'' +
+                ", region=" + region +
+                '}';
     }
 }

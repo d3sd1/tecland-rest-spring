@@ -1,4 +1,4 @@
-package TecLand.ORM;
+package TecLand.ORM.Model;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -7,13 +7,14 @@ import javax.persistence.*;
 @Entity
 @Table()
 @EntityListeners(AuditingEntityListener.class)
-public class Region {
+public class DashTheme {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false, nullable = false)
     private long id;
 
     @Column(nullable = false, unique = true)
-    private String code;
+    private String keyName;
 
     public long getId() {
         return id;
@@ -23,19 +24,19 @@ public class Region {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
+    public String getKeyName() {
+        return keyName;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setKeyName(String keyName) {
+        this.keyName = keyName;
     }
 
     @Override
     public String toString() {
-        return "Region{" +
+        return "DashTheme{" +
                 "id=" + id +
-                ", code='" + code + '\'' +
+                ", keyName='" + keyName + '\'' +
                 '}';
     }
 }

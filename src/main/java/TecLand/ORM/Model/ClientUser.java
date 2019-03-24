@@ -1,4 +1,4 @@
-package TecLand.ORM;
+package TecLand.ORM.Model;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -7,9 +7,10 @@ import javax.persistence.*;
 @Entity
 @Table()
 @EntityListeners(AuditingEntityListener.class)
-public class DashUser {
+public class ClientUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
     @Column(nullable = false, unique = true)
@@ -30,8 +31,8 @@ public class DashUser {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String loginJWT;
+    @OneToOne()
+    private ClientUserType clientType;
 
     public long getId() {
         return id;
@@ -47,22 +48,6 @@ public class DashUser {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getLoginJWT() {
-        return loginJWT;
-    }
-
-    public void setLoginJWT(String loginJWT) {
-        this.loginJWT = loginJWT;
     }
 
     public String getName() {
@@ -97,13 +82,33 @@ public class DashUser {
         this.country = country;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public ClientUserType getClientType() {
+        return clientType;
+    }
+
+    public void setClientType(ClientUserType clientType) {
+        this.clientType = clientType;
+    }
+
     @Override
     public String toString() {
-        return "DashUser{" +
+        return "ClientUser{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", surnames='" + surnames + '\'' +
+                ", telephone=" + telephone +
+                ", country=" + country +
                 ", password='" + password + '\'' +
-                ", loginJWT='" + loginJWT + '\'' +
+                ", clientType=" + clientType +
                 '}';
     }
 }

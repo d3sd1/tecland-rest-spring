@@ -1,0 +1,1 @@
+INSERT INTO `dash_theme` (`id`, `key_name`) VALUES (3,'corporate'),(2,'cosmic'),(1,'light');

@@ -89,6 +89,7 @@
             <artifactId>flyway-core</artifactId>
             <version>5.0.6</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -111,7 +112,7 @@
                         <configuration>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/angular-TecLand.websocket/dist/angular-TecLand.websocket
+                                    <directory>${basedir}/angular-TecLand.websocket/dist/angular-TecLand.Configuration
                                     </directory>
                                 </resource>
                             </resources>

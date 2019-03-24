@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,11 +15,12 @@ import java.util.Map;
 
 @Component
 public class UpdateCurrencyExchange {
+
     @Autowired
     private CurrencyRepository currencyRepository;
 
     //TODO: esto no esta funcionando correctamente, da error al hjacer save. el resto todo OK
-    //@Scheduled(fixedRate = 30000) // Every 30S (30.000 ms)
+    @Scheduled(fixedRate = 30000) // Every 30S (30.000 ms)
     public void updateCurrencies() {
         System.out.println("Updating currencies...");
 

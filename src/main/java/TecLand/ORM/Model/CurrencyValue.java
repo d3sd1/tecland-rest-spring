@@ -1,10 +1,12 @@
 package TecLand.ORM.Model;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
 @Entity
+@Transactional
 @Table()
 @EntityListeners(AuditingEntityListener.class)
 public class CurrencyValue {

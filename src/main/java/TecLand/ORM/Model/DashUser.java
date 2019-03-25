@@ -36,7 +36,7 @@ public class DashUser {
     @OneToOne()
     private DashTheme dashTheme;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private Collection<DashPermission> permissions = new ArrayList<>();
 

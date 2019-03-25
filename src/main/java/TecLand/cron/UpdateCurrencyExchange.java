@@ -19,6 +19,7 @@ public class UpdateCurrencyExchange {
     @Autowired
     private CurrencyRepository currencyRepository;
 
+
     //TODO: esto no esta funcionando correctamente, da error al hjacer save. el resto todo OK
     @Scheduled(fixedRate = 30000) // Every 30S (30.000 ms)
     public void updateCurrencies() {
@@ -41,7 +42,7 @@ public class UpdateCurrencyExchange {
             try {
                 obj = mapper.readValue(responseEntity.getBody(), new TypeReference<Map<String, Object>>() {
                 });
-                HashMap<String, Float> rates = (HashMap<String, Float>) obj.get("rates");
+                HashMap<String, Double> rates = (HashMap<String, Double>) obj.get("rates");
 
                 /* Update base currency at first, then remote it of the iteration */
                 String baseRateName = obj.get("base").toString();
@@ -49,7 +50,7 @@ public class UpdateCurrencyExchange {
                 CurrencyValue baseCurrency = this.updateCurrencyDb(baseRateName, baseRateVal, null);
 
                 /* Now iterate over the rest and update them */
-                for (Map.Entry<String, Float> rate : rates.entrySet()) {
+                for (Map.Entry<String, Double> rate : rates.entrySet()) {
                     this.updateCurrencyDb(rate.getKey(), rate.getValue(), baseCurrency);
 
                 }
@@ -63,14 +64,14 @@ public class UpdateCurrencyExchange {
         }
     }
 
-    private CurrencyValue updateCurrencyDb(String baseRateName, float baseRateVal, CurrencyValue baseCurrency) {
+    private CurrencyValue updateCurrencyDb(String baseRateName, double baseRateVal, CurrencyValue baseCurrency) {
         CurrencyValue baseCurencyDb = this.currencyRepository.findByKeyName(baseRateName);
         if (null == baseCurencyDb) {
             baseCurencyDb = new CurrencyValue();
         }
         baseCurencyDb.setKeyName(baseRateName);
         baseCurencyDb.setBaseCurrency(baseCurrency);
-        baseCurencyDb.setCurrencyExchangeValue(baseRateVal);
+        baseCurencyDb.setCurrencyExchangeValue((float) baseRateVal);
         this.currencyRepository.save(baseCurencyDb);
         return baseCurencyDb;
     }

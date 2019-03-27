@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Table()
 @EntityListeners(AuditingEntityListener.class)
 public class Product {
+    //TODO: incluir accesorios del producto
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
@@ -16,14 +17,21 @@ public class Product {
     @ManyToOne()
     private ClientUser user;
 
+    /*
+    NOTA: Para sacar la plantilla del producto, se coge de productType el tipo  (por ejemplo ProductTemplateMobile), y luego
+    con el productReferenceId puedes ir a la tabla directamente (por ejemplo ProductTemplateMobile) y buscar por dicha Id.
+     */
     @OneToOne()
-    private ProductTemplate productTemplate;
+    private ProductType productType;
+
+    @Column(nullable = false)
+    private int productReferenceId;
 
     @Column(nullable = false)
     private String customPhoto;
 
     @Column(nullable = false)
-    private float priceEUR;
+    private float priceBaseCurrency;
 
     @Column(nullable = false)
     private boolean acceptReturns;
@@ -44,14 +52,6 @@ public class Product {
         this.user = user;
     }
 
-    public ProductTemplate getProductTemplate() {
-        return productTemplate;
-    }
-
-    public void setProductTemplate(ProductTemplate productTemplate) {
-        this.productTemplate = productTemplate;
-    }
-
     public String getCustomPhoto() {
         return customPhoto;
     }
@@ -60,19 +60,27 @@ public class Product {
         this.customPhoto = customPhoto;
     }
 
-    public float getPriceEUR() {
-        return priceEUR;
-    }
-
-    public void setPriceEUR(float priceEUR) {
-        this.priceEUR = priceEUR;
-    }
-
     public boolean isAcceptReturns() {
         return acceptReturns;
     }
 
     public void setAcceptReturns(boolean acceptReturns) {
         this.acceptReturns = acceptReturns;
+    }
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
+
+    public int getProductReferenceId() {
+        return productReferenceId;
+    }
+
+    public void setProductReferenceId(int productReferenceId) {
+        this.productReferenceId = productReferenceId;
     }
 }

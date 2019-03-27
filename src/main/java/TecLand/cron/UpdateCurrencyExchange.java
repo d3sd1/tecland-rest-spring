@@ -20,8 +20,7 @@ public class UpdateCurrencyExchange {
     private CurrencyRepository currencyRepository;
 
 
-    //TODO: esto no esta funcionando correctamente, da error al hjacer save. el resto todo OK
-    @Scheduled(fixedRate = 30000) // Every 30S (30.000 ms)
+    @Scheduled(fixedRate = 30000) // Every 30S (30.000 ms), w/ beggining
     public void updateCurrencies() {
         System.out.println("Updating currencies...");
 

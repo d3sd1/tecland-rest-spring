@@ -26,11 +26,8 @@ public class ClientUserLogin {
     @Column(nullable = false, unique = true)
     private Timestamp expires;
 
-    @Column(nullable = false, unique = true)
-    private float coordsLat;
-
-    @Column(nullable = false, unique = true)
-    private float coordsLng;
+    @OneToOne()
+    private Coords loginCoords;
 
     public long getId() {
         return id;
@@ -72,20 +69,12 @@ public class ClientUserLogin {
         this.expires = expires;
     }
 
-    public float getCoordsLat() {
-        return coordsLat;
+    public Coords getLoginCoords() {
+        return loginCoords;
     }
 
-    public void setCoordsLat(float coordsLat) {
-        this.coordsLat = coordsLat;
-    }
-
-    public float getCoordsLng() {
-        return coordsLng;
-    }
-
-    public void setCoordsLng(float coordsLng) {
-        this.coordsLng = coordsLng;
+    public void setLoginCoords(Coords loginCoords) {
+        this.loginCoords = loginCoords;
     }
 
     @Override
@@ -96,8 +85,7 @@ public class ClientUserLogin {
                 ", jwt='" + jwt + '\'' +
                 ", expended=" + expended +
                 ", expires=" + expires +
-                ", coordsLat=" + coordsLat +
-                ", coordsLng=" + coordsLng +
+                ", loginCoords=" + loginCoords +
                 '}';
     }
 }

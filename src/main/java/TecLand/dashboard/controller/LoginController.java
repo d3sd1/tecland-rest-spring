@@ -71,6 +71,7 @@ public class LoginController {
             );
         }
 
+
         template.convertAndSend(ENDPOINT + "/" + sessionId, resp);
     }
 

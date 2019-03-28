@@ -20,16 +20,16 @@ public class DashUserLogin {
     @Column(nullable = false, unique = true)
     private String jwt;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Timestamp expended;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Timestamp expires;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private float coordsLat;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private float coordsLng;
 
     public long getId() {

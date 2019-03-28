@@ -2,6 +2,8 @@ package TecLand.dashboard.controller;
 
 import TecLand.ORM.Model.DashUser;
 import TecLand.ORM.Model.DashUserLogin;
+import TecLand.ORM.Model.DashUserLoginHistorical;
+import TecLand.ORM.Repository.DashUserLoginHistoricalRepository;
 import TecLand.ORM.Repository.DashUserLoginRepository;
 import TecLand.ORM.Repository.DashUserRepository;
 import TecLand.model.Response;
@@ -16,6 +18,7 @@ import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Controller
 public class LoginController {
@@ -27,6 +30,9 @@ public class LoginController {
 
     @Autowired
     private DashUserLoginRepository dashUserLoginRepository;
+
+    @Autowired
+    private DashUserLoginHistoricalRepository dashUserLoginHistoricalRepository;
 
     private static final String ENDPOINT = "/dash/login";
 
@@ -48,15 +54,32 @@ public class LoginController {
                 ""
         );
 
-        System.out.println("New login received, checking validity: " + userLogin.getUser().getEmail());
-        DashUser dbUser = dashUserRepository.findByEmail(userLogin.getUser().getEmail());
-        if (null != dbUser && sec.checkPassword(userLogin.getUser().getPassword(), dbUser.getPassword())) {
+
+        //TODO: el expire no esta fucnionando correctamente (contraastar con base de datos)
+        System.out.println("New login received, checking validity: " + userLogin.getDashUser().getEmail());
+        DashUser dbUser = dashUserRepository.findByEmail(userLogin.getDashUser().getEmail());
+        if (null != dbUser && sec.checkPassword(userLogin.getDashUser().getPassword(), dbUser.getPassword())) {
+            /* Move previous logins to historical */
+            List<DashUserLogin> otherLogins = this.dashUserLoginRepository.findAllByDashUser(dbUser);
+            for (DashUserLogin login : otherLogins) {
+                DashUserLoginHistorical loginHistorical = new DashUserLoginHistorical();
+                loginHistorical.setCoordsLat(login.getCoordsLat());
+                loginHistorical.setCoordsLng(login.getCoordsLng());
+                loginHistorical.setExpended(login.getExpended());
+                loginHistorical.setExpires(login.getExpires());
+                loginHistorical.setJwt(login.getJwt());
+                loginHistorical.setUser(login.getDashUser());
+                this.dashUserLoginHistoricalRepository.save(loginHistorical);
+                this.dashUserLoginRepository.delete(login);
+                //TODO: push para que desconecte a todos los usuarios anteriores con estos JWT.
+            }
+            /* Generate new login */
             System.out.println("DashUser connected: " + dbUser);
 
             DashUserLogin login = new DashUserLogin();
             login.setJwt(sec.generateJWTToken(Long.toString(dbUser.getId()), dbUser.getEmail(), "LOGIN",
                     Long.valueOf(this.env.getProperty("tecland.dashboard.session.timeout")), sessionId));
-            login.setUser(dbUser);
+            login.setDashUser(dbUser);
             login.setCoordsLat(userLogin.getCoordsLat());
             login.setCoordsLng(userLogin.getCoordsLng());
             login.setExpended(new Timestamp(System.currentTimeMillis()));

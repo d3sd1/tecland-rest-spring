@@ -1,6 +1,8 @@
 package TecLand.dashboard.controller;
 
 import TecLand.ORM.Model.DashUserLogin;
+import TecLand.ORM.Model.DashUserLoginHistorical;
+import TecLand.ORM.Repository.DashUserLoginHistoricalRepository;
 import TecLand.ORM.Repository.DashUserLoginRepository;
 import TecLand.ORM.Repository.DashUserRepository;
 import TecLand.model.Response;
@@ -25,6 +27,9 @@ public class JWTSessionController {
     @Autowired
     private DashUserLoginRepository dashUserLoginRepository;
 
+    @Autowired
+    private DashUserLoginHistoricalRepository dashUserLoginHistoricalRepository;
+
     private static final String ENDPOINT = "/dash/jwt/session";
 
     private final SimpMessagingTemplate template;
@@ -44,6 +49,9 @@ public class JWTSessionController {
                 "ERROR",
                 "NOT FOUND"
         );
+        if (null == userLogin) {
+            userLogin = new DashUserLogin();
+        }
 
         System.out.println("New check received, checking validity: " + userLogin.getJwt());
         DashUserLogin dbUserLogin = dashUserLoginRepository.findByJwt(userLogin.getJwt());
@@ -57,8 +65,16 @@ public class JWTSessionController {
                         ""
                 );
             }
+        } else { // Check login historiccals thathas not expired, then, return a code to show "Connected from another device"
+            DashUserLoginHistorical dbHistoricalUserLogin = dashUserLoginHistoricalRepository.findByJwt(userLogin.getJwt());
+            if (!sec.isJWTExpired(dbHistoricalUserLogin.getJwt(), dbHistoricalUserLogin.getHash())) {
+                resp = new Response(
+                        401,
+                        "LOGIN_SMW_ELSE",
+                        ""
+                );
+            }
         }
-
 
         template.convertAndSend(ENDPOINT + "/" + sessionId, resp);
     }

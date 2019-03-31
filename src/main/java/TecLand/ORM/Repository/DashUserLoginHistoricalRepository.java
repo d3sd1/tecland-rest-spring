@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DashUserLoginHistoricalRepository extends JpaRepository<DashUserLoginHistorical, Long> {
+    DashUserLoginHistorical findByJwt(String jwt);
 }

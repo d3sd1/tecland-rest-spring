@@ -68,6 +68,7 @@ public class LoginController {
                 loginHistorical.setExpires(login.getExpires());
                 loginHistorical.setJwt(login.getJwt());
                 loginHistorical.setUser(login.getDashUser());
+                loginHistorical.setHash(login.getHash());
                 this.dashUserLoginHistoricalRepository.save(loginHistorical);
                 this.dashUserLoginRepository.delete(login);
             }

@@ -32,6 +32,9 @@ public class DashUserLogin {
     @Column(nullable = false)
     private float coordsLng;
 
+    @Column(nullable = false)
+    private String hash;
+
     public long getId() {
         return id;
     }
@@ -86,6 +89,14 @@ public class DashUserLogin {
 
     public void setCoordsLng(float coordsLng) {
         this.coordsLng = coordsLng;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     @Override

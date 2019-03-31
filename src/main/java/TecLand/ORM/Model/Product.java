@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Table()
 @EntityListeners(AuditingEntityListener.class)
 public class Product {
-    //TODO: incluir accesorios del producto
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)

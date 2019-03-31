@@ -1,6 +1,7 @@
 package TecLand.utils;
 
 import com.lambdaworks.crypto.SCryptUtil;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,6 +20,18 @@ public class Security {
     public String encodePassword(String pwd) {
 
         return SCryptUtil.scrypt(pwd, 16, 16, 16);
+    }
+
+
+    private Claims decodeJWT(String jwt, String hash) {
+        return Jwts.parser()
+                .setSigningKey(DatatypeConverter.parseBase64Binary(hash))
+                .parseClaimsJws(jwt).getBody();
+    }
+
+    public boolean isJWTExpired(String jwt, String hash) {
+        Claims claims = this.decodeJWT(jwt, hash);
+        return claims.getExpiration().getTime() < new Date().getTime();
     }
 
     public String generateJWTToken(String id, String issuer, String subject, long ttlMillis, String hash) {

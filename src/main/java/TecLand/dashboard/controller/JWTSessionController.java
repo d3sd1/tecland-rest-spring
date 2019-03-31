@@ -49,14 +49,14 @@ public class JWTSessionController {
         DashUserLogin dbUserLogin = dashUserLoginRepository.findByJwt(userLogin.getJwt());
         if (null != dbUserLogin) {
             System.out.println("DashUser session retrieved: " + dbUserLogin);
-            if (true) {
-                //TODO: que no coja los expirados.
+
+            if (!sec.isJWTExpired(dbUserLogin.getJwt(), dbUserLogin.getHash())) {
+                resp = new Response(
+                        200,
+                        "SUCCESS",
+                        ""
+                );
             }
-            resp = new Response(
-                    200,
-                    "SUCCESS",
-                    ""
-            );
         }
 
 

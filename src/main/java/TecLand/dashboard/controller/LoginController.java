@@ -55,7 +55,6 @@ public class LoginController {
         );
 
 
-        //TODO: el expire no esta fucnionando correctamente (contraastar con base de datos)
         System.out.println("New login received, checking validity: " + userLogin.getDashUser().getEmail());
         DashUser dbUser = dashUserRepository.findByEmail(userLogin.getDashUser().getEmail());
         if (null != dbUser && sec.checkPassword(userLogin.getDashUser().getPassword(), dbUser.getPassword())) {
@@ -71,7 +70,6 @@ public class LoginController {
                 loginHistorical.setUser(login.getDashUser());
                 this.dashUserLoginHistoricalRepository.save(loginHistorical);
                 this.dashUserLoginRepository.delete(login);
-                //TODO: push para que desconecte a todos los usuarios anteriores con estos JWT.
             }
             /* Generate new login */
             System.out.println("DashUser connected: " + dbUser);
@@ -79,6 +77,7 @@ public class LoginController {
             DashUserLogin login = new DashUserLogin();
             login.setJwt(sec.generateJWTToken(Long.toString(dbUser.getId()), dbUser.getEmail(), "LOGIN",
                     Long.valueOf(this.env.getProperty("tecland.dashboard.session.timeout")), sessionId));
+            login.setHash(sessionId);
             login.setDashUser(dbUser);
             login.setCoordsLat(userLogin.getCoordsLat());
             login.setCoordsLng(userLogin.getCoordsLng());

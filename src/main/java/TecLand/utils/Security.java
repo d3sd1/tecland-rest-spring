@@ -24,6 +24,9 @@ public class Security {
 
 
     private Claims decodeJWT(String jwt, String hash) {
+        if (hash == null) {
+            hash = "emptyHashPreventNullPointer";
+        }
         return Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(hash))
                 .parseClaimsJws(jwt).getBody();

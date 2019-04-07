@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="Tecland DEV">
+    <serverData>
+      <paths name="Tecland DEV">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/var/www/test-rest.tecland.net" local="$PROJECT_DIR$/distribution" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

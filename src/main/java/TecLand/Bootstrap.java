@@ -1,5 +1,7 @@
 package TecLand;
 
+import TecLand.Logger.LogService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -11,15 +13,18 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableJpaAuditing
 @EnableScheduling
 public class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
+
+    @Autowired
+    private LogService logger;
     public static void main(String[] args) {
         SpringApplication.run(Bootstrap.class);
     }
 
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event) {
-        System.out.println("Checking active profiles...");
+        logger.debug("Checking active profiles...");
         for (String prof : event.getApplicationContext().getEnvironment().getActiveProfiles()) {
-            System.out.println("Active profile: " + prof);
+            logger.debug("Active profile: " + prof);
         }
     }
 

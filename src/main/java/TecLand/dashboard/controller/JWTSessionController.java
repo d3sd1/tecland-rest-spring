@@ -1,5 +1,6 @@
 package TecLand.dashboard.controller;
 
+import TecLand.Logger.LogService;
 import TecLand.ORM.Model.DashUserLogin;
 import TecLand.ORM.Model.DashUserLoginHistorical;
 import TecLand.ORM.Repository.DashUserLoginHistoricalRepository;
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class JWTSessionController {
+    @Autowired
+    private LogService logger;
+
     @Autowired
     Environment env;
 
@@ -53,11 +57,10 @@ public class JWTSessionController {
             userLogin = new DashUserLogin();
         }
 
-        System.out.println("New check received, checking validity: " + userLogin.getJwt());
+        this.logger.info("New check received, checking validity: " + userLogin.getJwt());
         DashUserLogin dbUserLogin = dashUserLoginRepository.findByJwt(userLogin.getJwt());
         if (null != dbUserLogin) {
-            System.out.println("DashUser session retrieved: " + dbUserLogin);
-
+            this.logger.info("DashUser session retrieved: " + dbUserLogin);
             if (!sec.isJWTExpired(dbUserLogin.getJwt(), dbUserLogin.getHash())) {
                 resp = new Response(
                         200,

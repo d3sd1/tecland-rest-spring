@@ -1,5 +1,6 @@
 package TecLand.dashboard.controller;
 
+import TecLand.Logger.LogService;
 import TecLand.ORM.Model.DashUser;
 import TecLand.ORM.Model.DashUserLogin;
 import TecLand.ORM.Model.DashUserLoginHistorical;
@@ -22,6 +23,8 @@ import java.util.List;
 
 @Controller
 public class LoginController {
+    @Autowired
+    private LogService logger;
     @Autowired
     Environment env;
 
@@ -55,7 +58,7 @@ public class LoginController {
         );
 
 
-        System.out.println("New login received, checking validity: " + userLogin.getDashUser().getEmail());
+        this.logger.info("New login received, checking validity: " + userLogin.getDashUser().getEmail());
         DashUser dbUser = dashUserRepository.findByEmail(userLogin.getDashUser().getEmail());
         if (null != dbUser && sec.checkPassword(userLogin.getDashUser().getPassword(), dbUser.getPassword())) {
             /* Move previous logins to historical */
@@ -73,7 +76,7 @@ public class LoginController {
                 this.dashUserLoginRepository.delete(login);
             }
             /* Generate new login */
-            System.out.println("DashUser connected: " + dbUser);
+            this.logger.info("DashUser connected: " + dbUser);
 
             DashUserLogin login = new DashUserLogin();
             login.setJwt(sec.generateJWTToken(Long.toString(dbUser.getId()), dbUser.getEmail(), "LOGIN",

@@ -128,7 +128,7 @@
                         <configuration>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/angular-TecLand.websocket/dist/angular-TecLand.Configuration
+                                    <directory>${basedir}/angular-TecLand.websocket/dist/angular-TecLand.Dashboard.Configuration
                                     </directory>
                                 </resource>
                             </resources>

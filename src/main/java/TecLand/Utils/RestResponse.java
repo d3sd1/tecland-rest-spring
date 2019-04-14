@@ -1,11 +1,11 @@
-package TecLand.model;
+package TecLand.Utils;
 
-public class Response {
+public class RestResponse {
     private int statusCode;
     private String statusMessage;
     private Object data;
 
-    public Response(int statusCode, String statusMessage, Object data) {
+    public RestResponse(int statusCode, String statusMessage, Object data) {
         this.statusCode = statusCode;
         this.statusMessage = statusMessage;
         this.data = data;
@@ -33,5 +33,14 @@ public class Response {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "RestResponse{" +
+                "statusCode=" + statusCode +
+                ", statusMessage='" + statusMessage + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

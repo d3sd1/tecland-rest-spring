@@ -31,6 +31,9 @@ public class ProductTemplateCommon {
     @OneToOne()
     private ProductModel productModel;
 
+    @Column(nullable = false)
+    private float weight = 0;
+
     public long getId() {
         return id;
     }

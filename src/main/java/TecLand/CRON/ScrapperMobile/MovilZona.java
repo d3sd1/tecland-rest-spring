@@ -1,4 +1,4 @@
-package TecLand.cron.ScrapperMobile;
+package TecLand.CRON.ScrapperMobile;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;

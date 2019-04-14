@@ -1,6 +1,5 @@
 package TecLand.cron;
 
-import TecLand.Logger.LogService;
 import TecLand.ORM.Model.CurrencyValue;
 import TecLand.ORM.Repository.CurrencyRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -20,12 +19,10 @@ public class UpdateCurrencyExchange {
     @Autowired
     private CurrencyRepository currencyRepository;
 
-    @Autowired
-    private LogService logger;
 
     @Scheduled(fixedRate = 30000) // Every 30S (30.000 ms), w/ beggining
     public void updateCurrencies() {
-        logger.info("Updating currencies...");
+        System.out.println("Updating currencies...");
 
         RestTemplate rest = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -35,8 +32,10 @@ public class UpdateCurrencyExchange {
         ResponseEntity<String> responseEntity = rest.exchange("https://api.exchangeratesapi.io/latest?base=EUR", HttpMethod.GET, requestEntity, String.class);
         HttpStatus status = responseEntity.getStatusCode();
         if (status.is2xxSuccessful()) {
-            logger.info("Currency rate exchange updated.");
+            System.out.println("Currency rate exchange updated.");
+
             ObjectMapper mapper = new ObjectMapper();
+
             Map<String, Object> obj = new HashMap<String, Object>();
 
             try {
@@ -56,12 +55,14 @@ public class UpdateCurrencyExchange {
                 }
 
             } catch (Exception e) {
-                logger.warning("Currency update error: " + e.getMessage());
+                System.out.println("Currency update error: ");
+                e.printStackTrace();
             }
         } else {
-            logger.warning("Currency rate exchange update error: " + status);
+            System.out.println("Currency rate exchange update error: " + status);
         }
     }
+
 
     private CurrencyValue updateCurrencyDb(String baseRateName, double baseRateVal, CurrencyValue baseCurrency) {
         CurrencyValue baseCurencyDb = this.currencyRepository.findByKeyName(baseRateName);

@@ -12,14 +12,18 @@ import TecLand.Dashboard.Services.DashSession;
 import TecLand.Utils.Security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestHeader;
 
+import java.security.Principal;
 import java.sql.Timestamp;
 
 @Controller
@@ -128,12 +132,13 @@ public class SessionController {
 
     @MessageMapping(DashRestRoute.SESSION_DATA)
     @SendToUser(DashRestRoute.SESSION_DATA)
-    public RestResponse onSessionDataRequest() {
+    public RestResponse onSubscribe(@Payload Message msg, SimpMessageHeaderAccessor headerAccessor) {
         RestResponse resp = new RestResponse(
                 403,
                 "ERROR",
                 ""
         );
+        this.logger.info("Getting session data for user: " + headerAccessor.getHeader("login"));
 
         // MUST GET JWT TOKEN FROM SMW LOOOOL. create interceptor first then do this!!
 

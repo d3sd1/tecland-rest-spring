@@ -27,6 +27,9 @@ public class DashUser {
     private String surnames;
 
     @Column(nullable = false)
+    private String lastPage;
+
+    @Column(nullable = false)
     private int telephone;
 
     @OneToOne()
@@ -113,6 +116,14 @@ public class DashUser {
 
     public void setPermissions(Collection<DashPermission> permissions) {
         this.permissions = permissions;
+    }
+
+    public String getLastPage() {
+        return lastPage;
+    }
+
+    public void setLastPage(String lastPage) {
+        this.lastPage = lastPage;
     }
 
     @Override

@@ -26,7 +26,7 @@ public class DashUser {
     @Column(nullable = false)
     private String surnames;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String lastPage;
 
     @Column(nullable = false)

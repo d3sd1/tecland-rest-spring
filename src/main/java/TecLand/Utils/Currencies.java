@@ -7,11 +7,15 @@ public class Currencies {
        return currency1.getCurrencyExchangeValue()*1/currency2.getCurrencyExchangeValue();
     }
 
-    public float applyDiscount(float price, float discount) {
-        return price * (1 - discount / 100);
+    public float[] convertNCurrencies(CurrencyValue[] currencies, CurrencyValue currency2) {
+        float[] currenciesValues = new float[currencies.length];
+        for (int i = 0; i < currencies.length; i++) {
+            currenciesValues[i] = convert(currencies[i], currency2);
+        }
+        return currenciesValues;
     }
 
-    public float applyTax(float price, float tax) {
-        return price * (1 + tax / 100);
+    public float applyPercentage(float price, float discount) {
+        return price * (1 + discount / 100);
     }
 }

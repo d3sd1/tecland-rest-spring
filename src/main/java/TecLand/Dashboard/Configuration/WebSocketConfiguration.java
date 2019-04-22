@@ -20,6 +20,7 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.*;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
+import javax.servlet.Filter;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +30,7 @@ import java.util.Map;
 @Configuration
 @EnableWebSocketMessageBroker
 @EnableScheduling
-public class WebSocketConfiguration extends WebSocketMessageBrokerConfigurationSupport
-        implements WebSocketMessageBrokerConfigurer {
+public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
     @Autowired
     Environment env;
@@ -56,7 +56,6 @@ public class WebSocketConfiguration extends WebSocketMessageBrokerConfigurationS
         } else {
             endpoint.setAllowedOrigins("*");
         }
-        endpoint.addInterceptors(new SessionInterceptor());
     }
 
     @Override
@@ -65,6 +64,8 @@ public class WebSocketConfiguration extends WebSocketMessageBrokerConfigurationS
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
+        System.out.println("CHANNEL INTERCEPTOR !!");
+        registration.interceptors(new FilterChannelInterceptor());
     }
 
     @Override

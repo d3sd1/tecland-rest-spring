@@ -1,5 +1,7 @@
 package TecLand.Dashboard.Configuration;
 
+import TecLand.Logger.LogService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -32,6 +34,8 @@ import java.util.Enumeration;
 import java.util.Map;
 
 class SessionInterceptor implements HandshakeInterceptor {
+    @Autowired
+    private LogService logger;
     @Override
     public void afterHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Exception e) {
 
@@ -42,12 +46,11 @@ class SessionInterceptor implements HandshakeInterceptor {
                                    WebSocketHandler wsHandler, Map<String, Object> attributes) {
         ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
         HttpServletRequest httpServletRequest = servletRequest.getServletRequest();
-        String token = httpServletRequest.getParameter("token");
+        String token = httpServletRequest.getHeader("jwt_session");
 
 
-
-        System.out.println("TOKEN: " + token);
-        System.out.println("TOKEN: " + request.getURI());
+        System.out.println("BEFORE HANDSHAKE");
+        System.out.println("BEFORE HANDSHAKE TYOKEN " + token);
 
         return true;
     }

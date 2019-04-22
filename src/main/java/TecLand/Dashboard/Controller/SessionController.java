@@ -1,5 +1,6 @@
 package TecLand.Dashboard.Controller;
 
+import TecLand.Dashboard.Annotation.Permission;
 import TecLand.Dashboard.RestEndpoint.DashRestRoute;
 import TecLand.Logger.LogService;
 import TecLand.ORM.Model.DashUser;
@@ -11,6 +12,7 @@ import TecLand.Utils.RestResponse;
 import TecLand.Dashboard.Services.DashSession;
 import TecLand.Utils.Security;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.Header;
@@ -58,6 +60,7 @@ public class SessionController {
 
     @MessageMapping(DashRestRoute.LOGOUT)
     @SendToUser(DashRestRoute.LOGOUT)
+    @Permission({"CLOUDFARE_CONFIG", "TEST_PERMISSIOJ2"})
     public RestResponse onLogout(@Payload DashUserLogin userLogin) {
         RestResponse resp = new RestResponse(
                 403,
@@ -84,6 +87,7 @@ public class SessionController {
 
     @MessageMapping(DashRestRoute.LOGIN)
     @SendToUser(DashRestRoute.LOGIN)
+    @Permission({"CLOUDFARE_CONFIG", "TEST_PERMISSIOJ2"})
     public RestResponse onLogin(@Payload DashUserLogin userLogin) {
         RestResponse resp = new RestResponse(
                 403,
@@ -132,17 +136,16 @@ public class SessionController {
 
     @MessageMapping(DashRestRoute.SESSION_DATA)
     @SendToUser(DashRestRoute.SESSION_DATA)
-    public RestResponse onSubscribe(@Payload Message msg, SimpMessageHeaderAccessor headerAccessor) {
+    @Permission({"CLOUDFARE_CONFIG", "TEST_PERMISSIOJ2"})
+    public RestResponse onSessiondata(@Payload Message msg) {
         RestResponse resp = new RestResponse(
                 403,
                 "ERROR",
                 ""
         );
-        this.logger.info("Getting session data for user: " + headerAccessor.getHeader("login"));
 
         // MUST GET JWT TOKEN FROM SMW LOOOOL. create interceptor first then do this!!
 
         return resp;
     }
-
 }

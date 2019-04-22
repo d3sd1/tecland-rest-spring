@@ -34,7 +34,9 @@ public class DashSession {
         loginHistorical.setJwt(login.getJwt());
         loginHistorical.setUser(login.getDashUser());
         loginHistorical.setHash(login.getHash());
-        this.dashUserLoginHistoricalRepository.save(loginHistorical);
+        if(null == this.dashUserLoginHistoricalRepository.findByJwt(login.getJwt())) {
+            this.dashUserLoginHistoricalRepository.save(loginHistorical);
+        }
         this.dashUserLoginRepository.delete(login);
     }
 

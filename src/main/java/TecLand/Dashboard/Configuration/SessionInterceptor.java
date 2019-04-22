@@ -1,57 +1,111 @@
 package TecLand.Dashboard.Configuration;
 
+import TecLand.Dashboard.RestEndpoint.DashRestRoute;
 import TecLand.Logger.LogService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.server.ServerHttpRequest;
-import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.http.server.ServletServerHttpRequest;
+import TecLand.ORM.Model.DashUserLogin;
+import TecLand.ORM.Repository.DashUserLoginRepository;
+import TecLand.Utils.Security;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessageType;
-import org.springframework.messaging.simp.config.ChannelRegistration;
+import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
-import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurationSupport;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-import org.springframework.web.socket.server.HandshakeInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Map;
+import java.security.Principal;
+import java.util.List;
 
-class SessionInterceptor implements HandshakeInterceptor {
-    @Autowired
+public class SessionInterceptor implements ChannelInterceptor {
     private LogService logger;
+    private DashUserLoginRepository dashUserLoginRepository;
+    private Security sec;
+
+    public SessionInterceptor(LogService logger, DashUserLoginRepository dashUserLoginRepository, Security sec) {
+        this.logger = logger;
+        this.dashUserLoginRepository = dashUserLoginRepository;
+        this.sec = sec;
+    }
+
     @Override
-    public void afterHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Exception e) {
+    public Message<?> preSend(Message<?> message, MessageChannel channel) {
+        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
+
+
+        /* Only check SUBSCRIBE and SEND operations */
+        if (!StompCommand.SUBSCRIBE.equals(accessor.getCommand())
+                && !StompCommand.SEND.equals(accessor.getCommand())) {
+            return message;
+        }
+
+        /* Check if user has JWT, and it is required for current path */
+        List tokenList = accessor.getNativeHeader("jwt_session");
+        List pathList = accessor.getNativeHeader("destination");
+        String jwtToken, path;
+        if (tokenList == null || tokenList.size() < 1) {
+            throw new MessagingException("DISCONNECT_SILENTLY");
+        } else {
+            jwtToken = tokenList.get(0).toString();
+        }
+        if (pathList == null || pathList.size() < 1) {
+            throw new MessagingException("PATH_NOT_FOUND");
+        } else {
+            path = pathList.get(0).toString();
+        }
+        boolean currentPathRequiresLogin = !path.contains(DashRestRoute.LOGIN_NOT_NEEDED_PREFIX);
+        DashUserLogin login = this.dashUserLoginRepository.findByJwt(jwtToken);
+        boolean validJwtSession = false;
+        if (null != login && !this.sec.isJWTExpired(login.getJwt(), login.getHash())) {
+            validJwtSession = true;
+        }
+
+        if (!validJwtSession && !currentPathRequiresLogin && !jwtToken.equals("")) {
+            throw new MessagingException("DISCONNECT_SILENTLY");
+        } else if (!validJwtSession && !jwtToken.equals("")) {
+            throw new MessagingException("DISCONNECT");
+        } else if (currentPathRequiresLogin && !validJwtSession) {
+            throw new MessagingException("NO_PERMISSION");
+        }
+
+
+        // validate and convert to a Principal based on your own requirements e.g.
+        // authenticationManager.authenticate(JwtAuthentication(token))
+        Principal yourAuth = new Principal() {
+            @Override
+            public String getName() {
+                return "MY NEW GUACHI NAME";
+            }
+        };
+
+        accessor.setUser(yourAuth);
+
+        // not documented anywhere but necessary otherwise NPE in StompSubProtocolHandler!
+        accessor.setLeaveMutable(true);
+
+        return message;
+    }
+
+    @Override
+    public void postSend(Message<?> message, MessageChannel messageChannel, boolean b) {
 
     }
 
     @Override
-    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
-                                   WebSocketHandler wsHandler, Map<String, Object> attributes) {
-        ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
-        HttpServletRequest httpServletRequest = servletRequest.getServletRequest();
-        String token = httpServletRequest.getHeader("jwt_session");
+    public void afterSendCompletion(Message<?> message, MessageChannel messageChannel, boolean b, Exception e) {
 
+    }
 
-        System.out.println("BEFORE HANDSHAKE");
-        System.out.println("BEFORE HANDSHAKE TYOKEN " + token);
+    @Override
+    public boolean preReceive(MessageChannel messageChannel) {
+        return false;
+    }
 
-        return true;
+    @Override
+    public Message<?> postReceive(Message<?> message, MessageChannel messageChannel) {
+        return null;
+    }
+
+    @Override
+    public void afterReceiveCompletion(Message<?> message, MessageChannel messageChannel, Exception e) {
+
     }
 }

@@ -58,7 +58,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
         try {
-            registration.interceptors(new FilterChannelInterceptor(logger, dashUserLoginRepository, sec));
+            registration.interceptors(new SessionInterceptor(logger, dashUserLoginRepository, sec));
         } catch (MessagingException e) {
         } catch (Exception e) {
             e.printStackTrace();

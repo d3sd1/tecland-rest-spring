@@ -15,6 +15,8 @@ import org.springframework.messaging.support.ChannelInterceptor;
 import java.security.Principal;
 import java.util.List;
 
+//TODO: esta clase lanza una excepcion cuando te conectas desde otro navefgador (teniendo el naveghador actuial cerrado). esta excepcion es verbose, y se deberia eliminar
+
 public class SessionInterceptor implements ChannelInterceptor {
     private LogService logger;
     private DashUserLoginRepository dashUserLoginRepository;
@@ -28,6 +30,7 @@ public class SessionInterceptor implements ChannelInterceptor {
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
+
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 
 

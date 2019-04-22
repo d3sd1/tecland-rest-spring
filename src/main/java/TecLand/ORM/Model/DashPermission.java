@@ -39,4 +39,13 @@ public class DashPermission {
                 ", permissionKey='" + permissionKey + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof DashPermission) {
+            DashPermission toCompare = (DashPermission) o;
+            return this.id == toCompare.id;
+        }
+        return false;
+    }
 }

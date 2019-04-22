@@ -2,6 +2,7 @@ package TecLand.Dashboard.Controller;
 
 import TecLand.Dashboard.Annotation.Permission;
 import TecLand.Dashboard.RestEndpoint.DashRestRoute;
+import TecLand.Dashboard.Services.DashSession;
 import TecLand.Logger.LogService;
 import TecLand.ORM.Model.DashUser;
 import TecLand.ORM.Model.DashUserLogin;
@@ -9,23 +10,17 @@ import TecLand.ORM.Repository.DashUserLoginHistoricalRepository;
 import TecLand.ORM.Repository.DashUserLoginRepository;
 import TecLand.ORM.Repository.DashUserRepository;
 import TecLand.Utils.RestResponse;
-import TecLand.Dashboard.Services.DashSession;
 import TecLand.Utils.Security;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestHeader;
 
-import java.security.Principal;
 import java.sql.Timestamp;
 
 @Controller
@@ -60,7 +55,7 @@ public class SessionController {
 
     @MessageMapping(DashRestRoute.LOGOUT)
     @SendToUser(DashRestRoute.LOGOUT)
-    @Permission({"CLOUDFARE_CONFIG", "TEST_PERMISSIOJ2"})
+    @Permission()
     public RestResponse onLogout(@Payload DashUserLogin userLogin) {
         RestResponse resp = new RestResponse(
                 403,
@@ -87,7 +82,7 @@ public class SessionController {
 
     @MessageMapping(DashRestRoute.LOGIN)
     @SendToUser(DashRestRoute.LOGIN)
-    @Permission({"CLOUDFARE_CONFIG", "TEST_PERMISSIOJ2"})
+    @Permission()
     public RestResponse onLogin(@Payload DashUserLogin userLogin) {
         RestResponse resp = new RestResponse(
                 403,
@@ -136,15 +131,17 @@ public class SessionController {
 
     @MessageMapping(DashRestRoute.SESSION_DATA)
     @SendToUser(DashRestRoute.SESSION_DATA)
-    @Permission({"CLOUDFARE_CONFIG", "TEST_PERMISSIOJ2"})
-    public RestResponse onSessiondata(@Payload Message msg) {
+    @Permission({"TESTING_PERMISSIONS"})
+    public RestResponse onSessiondata(@Payload Message msg, SimpMessageHeaderAccessor headerAccessor) {
         RestResponse resp = new RestResponse(
                 403,
                 "ERROR",
                 ""
         );
 
-        // MUST GET JWT TOKEN FROM SMW LOOOOL. create interceptor first then do this!!
+        System.out.println("USER" + headerAccessor.getSessionAttributes().get("user"));
+
+        // MUST GET JWT TOKEN FROM SMW LOOOOL. retrieve it!! D:. se puede meter en el principal desde el interceptor!!
 
         return resp;
     }

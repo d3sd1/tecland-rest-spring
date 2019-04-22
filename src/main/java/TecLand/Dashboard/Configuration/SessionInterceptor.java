@@ -1,4 +1,4 @@
-package TecLand.Configuration;
+package TecLand.Dashboard.Configuration;
 
 import TecLand.Dashboard.RestEndpoint.DashRestRoute;
 import TecLand.Logger.LogService;
@@ -12,8 +12,8 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 
-import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 //TODO: esta clase lanza una excepcion cuando te conectas desde otro navefgador (teniendo el naveghador actuial cerrado). esta excepcion es verbose, y se deberia eliminar
 
@@ -69,21 +69,13 @@ public class SessionInterceptor implements ChannelInterceptor {
             throw new MessagingException("NO_PERMISSION");
         }
 
+        if (null != login) {
+            Map<String, Object> attrs = accessor.getSessionAttributes();
+            attrs.put("user", login.getDashUser());
+            accessor.setSessionAttributes(attrs);
+        }
 
-        // validate and convert to a Principal based on your own requirements e.g.
-        // authenticationManager.authenticate(JwtAuthentication(token))
-        Principal yourAuth = new Principal() {
-            @Override
-            public String getName() {
-                return "MY NEW GUACHI NAME";
-            }
-        };
-
-        accessor.setUser(yourAuth);
-
-        // not documented anywhere but necessary otherwise NPE in StompSubProtocolHandler!
         accessor.setLeaveMutable(true);
-
         return message;
     }
 

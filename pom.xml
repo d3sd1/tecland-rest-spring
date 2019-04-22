@@ -20,6 +20,7 @@
     </parent>
 
     <dependencies>
+        <!-- JSoup -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -56,6 +57,11 @@
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
             <version>3.24.1-GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat</groupId>

@@ -1,4 +1,4 @@
-package TecLand.Dashboard.Configuration;
+package TecLand.Configuration;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer;

@@ -1,4 +1,4 @@
-package TecLand.Dashboard.Configuration;
+package TecLand.Configuration;
 
 import TecLand.Dashboard.RestEndpoint.DashRestRoute;
 import TecLand.Logger.LogService;

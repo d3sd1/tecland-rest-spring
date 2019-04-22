@@ -1,4 +1,4 @@
-package TecLand.Dashboard.Configuration;
+package TecLand.Configuration;
 
 import TecLand.Logger.LogService;
 import TecLand.ORM.Repository.DashUserLoginRepository;

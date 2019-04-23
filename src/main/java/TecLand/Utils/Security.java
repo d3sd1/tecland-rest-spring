@@ -53,7 +53,7 @@ public class Security {
 
     public boolean isJWTExpired(String jwt, String hash) {
         Claims claims = this.decodeJWT(jwt, hash);
-        return claims.getExpiration().getTime() < new Date().getTime();
+        return null != claims && claims.getExpiration().getTime() < new Date().getTime();
     }
 
     public boolean validateSession(String jwt) {

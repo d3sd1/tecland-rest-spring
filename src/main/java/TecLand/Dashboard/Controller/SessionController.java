@@ -56,7 +56,7 @@ public class SessionController {
     @MessageMapping(DashRestRoute.LOGOUT)
     @SendToUser(DashRestRoute.LOGOUT)
     @Permission()
-    public RestResponse onLogout(@Payload DashUserLogin userLogin) {
+    public RestResponse onLogout(@Payload DashUserLogin userLogin, SimpMessageHeaderAccessor headerAccessor) {
         RestResponse resp = new RestResponse(
                 403,
                 "ERROR",
@@ -83,7 +83,7 @@ public class SessionController {
     @MessageMapping(DashRestRoute.LOGIN)
     @SendToUser(DashRestRoute.LOGIN)
     @Permission()
-    public RestResponse onLogin(@Payload DashUserLogin userLogin) {
+    public RestResponse onLogin(@Payload DashUserLogin userLogin, SimpMessageHeaderAccessor headerAccessor) {
         RestResponse resp = new RestResponse(
                 403,
                 "ERROR",

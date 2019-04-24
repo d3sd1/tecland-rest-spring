@@ -34,14 +34,11 @@ public class KiMovil{
             String link = null;
             for (Element elem : entradas) {
                 link = elem.getElementsByClass("device-link").attr("href");
-
                 ScrapperMoviles(link);
             }
         }else{
             logger.warning("ScrapperMoviles: No conectando con KiMovil " + url);
         }
-
-
     }
 
     private  void ScrapperMoviles(String link){
@@ -52,11 +49,13 @@ public class KiMovil{
             Elements specs = document.getElementsByClass("kifeatures clear");
 
             String[] size = null;
+            String[] weight = null;
             for(Element elem : specs){
                size = elem.getElementsByClass("fc w30 inches").text().split("\"");
+               weight = elem.getElementsByClass("fc w100 ram").text().split(" ");
             }
+            movil.setWeight(Float.parseFloat(weight[1]));
             movil.setScreenSize(Float.parseFloat(size[0]));
-
         }else{
             logger.warning(" ScrapperMoviles[KiMovil] : No conectando con " + link);
         }

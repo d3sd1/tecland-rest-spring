@@ -135,7 +135,7 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <echo>Using env.test.properties</echo>
+                                        <echo>Using test profile</echo>
                                         <copy file="src/main/resources/application-test.properties"
                                               tofile="${project.build.outputDirectory}
                                  /env.properties"/>

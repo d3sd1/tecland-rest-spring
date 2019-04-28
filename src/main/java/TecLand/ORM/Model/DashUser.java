@@ -1,6 +1,5 @@
 package TecLand.ORM.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -26,11 +25,11 @@ public class DashUser {
     @Column(nullable = false)
     private String surnames;
 
-    @Column(nullable = true)
-    private String lastPage;
-
     @Column(nullable = false)
     private int telephone;
+
+    @Column(nullable = true)
+    private String lastVisitPage;
 
     @OneToOne()
     private Country country;
@@ -118,12 +117,12 @@ public class DashUser {
         this.permissions = permissions;
     }
 
-    public String getLastPage() {
-        return lastPage;
+    public String getLastVisitPage() {
+        return lastVisitPage;
     }
 
-    public void setLastPage(String lastPage) {
-        this.lastPage = lastPage;
+    public void setLastVisitPage(String lastVisitPage) {
+        this.lastVisitPage = lastVisitPage;
     }
 
     @Override

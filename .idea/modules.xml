@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/TECLAND_SPRING_REST.iml" filepath="$PROJECT_DIR$/.idea/TECLAND_SPRING_REST.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Tecland_Spring_Rest.iml" filepath="$PROJECT_DIR$/.idea/Tecland_Spring_Rest.iml" />
     </modules>
   </component>
 </project>

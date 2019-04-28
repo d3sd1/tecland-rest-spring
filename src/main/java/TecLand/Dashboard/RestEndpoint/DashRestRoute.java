@@ -5,7 +5,7 @@ NOTE: those with /auth/ inside DO NOT REQUIRE LOGIN!!
  */
 public class DashRestRoute {
     /* KERNEL ROUTES */
-    public static final String LOGIN_NOT_NEEDED_PREFIX = "/auth/";
+    public static final String LOGIN_NOT_NEEDED_PREFIX = "/auth";
     private static final String PREFIX = "/dash";
 
     /* CONTROLLER ROUTES */

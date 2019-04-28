@@ -13,7 +13,6 @@ import TecLand.Utils.RestResponse;
 import TecLand.Utils.Security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -132,18 +131,29 @@ public class SessionController {
 
     @MessageMapping(DashRestRoute.SESSION_DATA)
     @SendToUser(DashRestRoute.SESSION_DATA)
-    @Permission({"TESTING_PERMISSIONS"})
-    public RestResponse onSessiondata(@Payload Message msg, SimpMessageHeaderAccessor headerAccessor) {
+    @Permission()
+    public RestResponse onSessiondata(@Payload DashUser userUpdate, SimpMessageHeaderAccessor headerAccessor) {
         RestResponse resp = new RestResponse(
                 403,
                 "ERROR",
                 ""
         );
+        DashUser user = (DashUser) headerAccessor.getSessionAttributes().get("user");
+        user = this.dashUserRepository.findByEmail(user.getEmail());
+        /* Update user if wanted */
+        if (null != userUpdate) {
+            if (userUpdate.getLastVisitPage() != null) {
+                user.setLastVisitPage(userUpdate.getLastVisitPage());
+            }
+            //user.save();
+            //TODO: que el save funcione
+        }
 
-        System.out.println("USER" + headerAccessor.getSessionAttributes().get("user"));
-
-        // MUST GET JWT TOKEN FROM SMW LOOOOL. retrieve it!! D:. se puede meter en el principal desde el interceptor!!
-
+        /* Return user if needed */
+        if (null != user) {
+            resp.setStatusCode(200);
+            resp.setData(user);
+        }
         return resp;
     }
 }

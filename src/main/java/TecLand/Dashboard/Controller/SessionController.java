@@ -45,6 +45,7 @@ public class SessionController {
 
     @Autowired
     DashSession dashSessionManager;
+
     private final SimpMessagingTemplate broadcaster;
 
     @Autowired

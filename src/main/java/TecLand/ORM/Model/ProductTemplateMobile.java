@@ -19,4 +19,14 @@ public class ProductTemplateMobile extends ProductTemplateCommon {
     @Column()
     private float screenSize;
 
+    public void setScreenSize(float size){
+        if(size<0){
+            size*=-1;
+        }
+        this.screenSize = size;
+    }
+
+    public float getScreenSize(){
+        return this.screenSize;
+    }
 }

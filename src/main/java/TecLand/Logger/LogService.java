@@ -1,14 +1,11 @@
 package TecLand.Logger;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import org.apache.logging.log4j.LogManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 @Service("LogService")
@@ -46,7 +43,7 @@ public class LogService {
         // This won't debug to MongoDB since we don't want to saturate it lol.
         if (this.activeProfile.equals("dev") || this.activeProfile.equals("test")) {
             Logger consoleLogger = LoggerFactory.getLogger(this.getCaller());
-            consoleLogger.debug(msg);
+            consoleLogger.info(msg);
         }
     }
 

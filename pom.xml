@@ -8,7 +8,7 @@
     <artifactId>TecLand_REST</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <java.version>12</java.version>
+        <!--<java.version>12</java.version>-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -118,6 +118,36 @@
 
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.1</version>
+                        <executions>
+                            <execution>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <echo>Using test profile</echo>
+                                        <copy file="src/main/resources/application-test.properties"
+                                              tofile="${project.build.outputDirectory}
+                                 /env.properties"/>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <build>
         <finalName>tecland</finalName>
         <plugins>

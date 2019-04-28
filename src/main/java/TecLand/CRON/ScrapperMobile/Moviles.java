@@ -22,11 +22,9 @@ public class Moviles {
             Document doc = getHtmlDocument(url);
 
             if(doc != null){
-
                 Elements caracteristicas = doc.select("div.listado-caracteristicas-detalle");
             }
         }
-
     }
 
     private int getStatusConnectionCode(String url){

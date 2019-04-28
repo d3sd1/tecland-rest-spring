@@ -34,6 +34,17 @@ public class ProductTemplateCommon {
     @Column(nullable = false)
     private float weight = 0;
 
+    public void setWeight(float weight){
+        if(weight<0){
+            weight *= -1;
+        }
+        this.weight = weight;
+    }
+
+    public float getWeight(){
+        return this.weight;
+    }
+
     public long getId() {
         return id;
     }

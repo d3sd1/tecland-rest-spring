@@ -21,5 +21,4 @@ public class ProductOS {
 
     @Column(nullable = false)
     private float version;
-
 }

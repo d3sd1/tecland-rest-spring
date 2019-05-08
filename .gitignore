@@ -1,6 +1,6 @@
 *.iml
 target/
-/.idea
-/distribution
+.idea/
+distribution/
 .idea
 distribution

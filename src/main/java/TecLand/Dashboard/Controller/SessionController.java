@@ -145,8 +145,7 @@ public class SessionController {
             if (userUpdate.getLastVisitPage() != null) {
                 user.setLastVisitPage(userUpdate.getLastVisitPage());
             }
-            //user.save();
-            //TODO: que el save funcione
+            this.dashUserRepository.save(user);
         }
 
         /* Return user if needed */

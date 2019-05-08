@@ -1,16 +1,13 @@
 package TecLand.CRON.ScrapperMobile;
 
-import TecLand.ORM.Model.ProductTemplateMobile;
-
 import TecLand.Logger.LogService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-
+import TecLand.ORM.Model.ProductTemplateMobile;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
@@ -22,8 +19,8 @@ public class KiMovil{
 
     private final String url = "https://www.kimovil.com/es/comparar-moviles";
 
-    //@org.springframework.context.annotation.Profile({"dev", "test"})
-    @Scheduled(fixedRate = 30000)
+    //@org.springframework.context.annotation.Profile({"dev", "test"}) <- esto es importante dejarlo chicos :)
+    //@Scheduled(fixedRate = 30000) //desactivado por andrei. tiene error y sale ERROR en el debugger!!
     public void ScrapperKiMovil(){
         if (getStatusConnectionCode(url) == 200) {
             logger.info("ScrapperMoviles: Conectando con KiMovil");

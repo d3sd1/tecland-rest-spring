@@ -1,5 +1,6 @@
-package TecLand.ORM.Model;
+package TecLand.ORM.Generic.Products.Templates;
 
+import TecLand.ORM.Generic.Products.ProductTemplateCommon;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -12,9 +13,6 @@ public class ProductTemplateMobile extends ProductTemplateCommon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
-
-    @OneToOne()
-    private ProductTemplateCommon commonProperties;
 
     @Column()
     private float screenSize;

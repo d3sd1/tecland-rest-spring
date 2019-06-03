@@ -1,5 +1,6 @@
-package TecLand.ORM.Model;
+package TecLand.ORM.Generic.Products;
 
+import TecLand.ORM.Client.ClientUser;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -7,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table()
 @EntityListeners(AuditingEntityListener.class)
-public class Product {
+public class Sell {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)

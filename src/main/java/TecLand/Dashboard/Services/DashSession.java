@@ -1,8 +1,8 @@
 package TecLand.Dashboard.Services;
 
 import TecLand.Logger.LogService;
-import TecLand.ORM.Model.DashUserLogin;
-import TecLand.ORM.Model.DashUserLoginHistorical;
+import TecLand.ORM.Dashboard.DashUserLogin;
+import TecLand.ORM.Dashboard.DashUserLoginHistorical;
 import TecLand.ORM.Repository.DashUserLoginHistoricalRepository;
 import TecLand.ORM.Repository.DashUserLoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;

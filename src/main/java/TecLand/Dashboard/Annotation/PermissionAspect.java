@@ -1,8 +1,8 @@
 package TecLand.Dashboard.Annotation;
 
 import TecLand.Logger.LogService;
-import TecLand.ORM.Model.DashPermission;
-import TecLand.ORM.Model.DashUser;
+import TecLand.ORM.Dashboard.DashPermission;
+import TecLand.ORM.Dashboard.DashUser;
 import TecLand.ORM.Repository.DashPermissionRepository;
 import TecLand.Utils.RestResponse;
 import org.aspectj.lang.ProceedingJoinPoint;

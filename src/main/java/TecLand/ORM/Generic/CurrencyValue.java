@@ -1,4 +1,4 @@
-package TecLand.ORM.Model;
+package TecLand.ORM.Generic;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.transaction.annotation.Transactional;

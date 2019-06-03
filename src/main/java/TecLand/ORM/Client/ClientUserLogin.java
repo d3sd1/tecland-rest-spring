@@ -1,5 +1,6 @@
-package TecLand.ORM.Model;
+package TecLand.ORM.Client;
 
+import TecLand.ORM.Generic.Coords;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;

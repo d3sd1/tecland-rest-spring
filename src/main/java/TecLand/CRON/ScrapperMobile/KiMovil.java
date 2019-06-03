@@ -1,7 +1,7 @@
 package TecLand.CRON.ScrapperMobile;
 
 import TecLand.Logger.LogService;
-import TecLand.ORM.Model.ProductTemplateMobile;
+import TecLand.ORM.Generic.Products.Templates.ProductTemplateMobile;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

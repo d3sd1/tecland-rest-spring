@@ -1,4 +1,4 @@
-package TecLand.ORM.Model;
+package TecLand.ORM.Dashboard;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -8,14 +8,14 @@ import java.sql.Timestamp;
 @Entity
 @Table()
 @EntityListeners(AuditingEntityListener.class)
-public class DashUserLogin {
+public class DashUserLoginHistorical {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
     @OneToOne()
-    private DashUser dashUser;
+    private DashUser user;
 
     @Column(nullable = false, unique = true)
     private String jwt;
@@ -43,12 +43,12 @@ public class DashUserLogin {
         this.id = id;
     }
 
-    public DashUser getDashUser() {
-        return dashUser;
+    public DashUser getUser() {
+        return user;
     }
 
-    public void setDashUser(DashUser dashUser) {
-        this.dashUser = dashUser;
+    public void setUser(DashUser user) {
+        this.user = user;
     }
 
     public String getJwt() {
@@ -97,18 +97,5 @@ public class DashUserLogin {
 
     public void setHash(String hash) {
         this.hash = hash;
-    }
-
-    @Override
-    public String toString() {
-        return "DashUserLogin{" +
-                "id=" + id +
-                ", dashUser=" + dashUser +
-                ", jwt='" + jwt + '\'' +
-                ", expended=" + expended +
-                ", expires=" + expires +
-                ", coordsLat=" + coordsLat +
-                ", coordsLng=" + coordsLng +
-                '}';
     }
 }

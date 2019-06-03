@@ -1,4 +1,4 @@
-package TecLand.ORM.Model;
+package TecLand.ORM.Generic.Products.Generic;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -7,13 +7,18 @@ import javax.persistence.*;
 @Entity
 @Table()
 @EntityListeners(AuditingEntityListener.class)
-public class ProductWorld {
+public class ProductOS {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
-    @ManyToOne()
-    private ClientUser user;
+    @Column(nullable = false)
+    private String friendlyName;
 
+    @Column(nullable = false)
+    private String keyName;
+
+    @Column(nullable = false)
+    private float version;
 }

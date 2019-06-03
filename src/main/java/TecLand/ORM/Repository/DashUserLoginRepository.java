@@ -1,7 +1,7 @@
 package TecLand.ORM.Repository;
 
-import TecLand.ORM.Model.DashUser;
-import TecLand.ORM.Model.DashUserLogin;
+import TecLand.ORM.Dashboard.DashUser;
+import TecLand.ORM.Dashboard.DashUserLogin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

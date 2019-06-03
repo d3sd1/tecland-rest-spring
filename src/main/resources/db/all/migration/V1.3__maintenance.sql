@@ -1,0 +1,1 @@
+insert into site_config (conf_key, conf_val, expose) VALUES ("maintenance", "false", 1);

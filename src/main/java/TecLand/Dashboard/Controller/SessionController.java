@@ -4,8 +4,8 @@ import TecLand.Dashboard.Annotation.Permission;
 import TecLand.Dashboard.RestEndpoint.DashRestRoute;
 import TecLand.Dashboard.Services.DashSession;
 import TecLand.Logger.LogService;
-import TecLand.ORM.Model.DashUser;
-import TecLand.ORM.Model.DashUserLogin;
+import TecLand.ORM.Dashboard.DashUser;
+import TecLand.ORM.Dashboard.DashUserLogin;
 import TecLand.ORM.Repository.DashUserLoginHistoricalRepository;
 import TecLand.ORM.Repository.DashUserLoginRepository;
 import TecLand.ORM.Repository.DashUserRepository;
@@ -151,6 +151,7 @@ public class SessionController {
         /* Return user if needed */
         if (null != user) {
             resp.setStatusCode(200);
+            resp.setStatusMessage("DATA_RETRIEVED");
             resp.setData(user);
         }
         return resp;

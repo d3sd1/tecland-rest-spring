@@ -2,7 +2,7 @@ package TecLand.Dashboard.Configuration;
 
 import TecLand.Dashboard.RestEndpoint.DashRestRoute;
 import TecLand.Logger.LogService;
-import TecLand.ORM.Model.DashUserLogin;
+import TecLand.ORM.Dashboard.DashUserLogin;
 import TecLand.ORM.Repository.DashUserLoginRepository;
 import TecLand.Utils.Security;
 import org.springframework.messaging.Message;
@@ -54,7 +54,7 @@ public class SessionInterceptor implements ChannelInterceptor {
         } else {
             path = pathList.get(0).toString();
         }
-        boolean currentPathRequiresLogin = !path.contains(DashRestRoute.LOGIN_NOT_NEEDED_PREFIX);
+        boolean currentPathRequiresLogin = !path.contains(DashRestRoute.LOGIN_NOT_NEEDED_PREFIX) && !path.contains(DashRestRoute.ROUTER);
         DashUserLogin login = this.dashUserLoginRepository.findByJwt(jwtToken);
         boolean validJwtSession = false;
         if (null != login && !this.sec.isJWTExpired(login.getJwt(), login.getHash())) {

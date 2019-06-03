@@ -7,6 +7,7 @@ public class DashRestRoute {
     /* KERNEL ROUTES */
     public static final String LOGIN_NOT_NEEDED_PREFIX = "/auth";
     private static final String PREFIX = "/dash";
+    public static final String ROUTER = PREFIX + "/routing";
 
     /* CONTROLLER ROUTES */
     public static final String LOGIN = PREFIX + LOGIN_NOT_NEEDED_PREFIX + "/login";

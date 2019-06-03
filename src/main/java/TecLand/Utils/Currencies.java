@@ -1,6 +1,6 @@
 package TecLand.Utils;
 
-import TecLand.ORM.Model.CurrencyValue;
+import TecLand.ORM.Generic.CurrencyValue;
 
 public class Currencies {
     public float convert(CurrencyValue currency1, CurrencyValue currency2) {

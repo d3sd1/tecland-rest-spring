@@ -1,12 +1,11 @@
-package TecLand.ORM.Model;
+package TecLand.ORM.Generic.Products;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import TecLand.ORM.Generic.Coords;
+import TecLand.ORM.Generic.Products.Generic.*;
 
 import javax.persistence.*;
 
-@Entity
-@Table()
-@EntityListeners(AuditingEntityListener.class)
+@MappedSuperclass
 public class ProductTemplateCommon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

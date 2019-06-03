@@ -1,7 +1,7 @@
 package TecLand.CRON;
 
 import TecLand.Logger.LogService;
-import TecLand.ORM.Model.CurrencyValue;
+import TecLand.ORM.Generic.CurrencyValue;
 import TecLand.ORM.Repository.CurrencyRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,7 +1,7 @@
 package TecLand.Utils;
 
 import TecLand.Logger.LogService;
-import TecLand.ORM.Model.DashUserLogin;
+import TecLand.ORM.Dashboard.DashUserLogin;
 import TecLand.ORM.Repository.DashUserLoginRepository;
 import com.lambdaworks.crypto.SCryptUtil;
 import io.jsonwebtoken.*;

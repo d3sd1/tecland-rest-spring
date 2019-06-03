@@ -14,7 +14,7 @@ public class ProductModel {
     private long id;
 
     @OneToOne
-    private ProductBrand modelBrand;
+    private Brand modelBrand;
 
     @Column(nullable = false)
     private String modelSerial;
@@ -33,11 +33,11 @@ public class ProductModel {
         this.id = id;
     }
 
-    public ProductBrand getModelBrand() {
+    public Brand getModelBrand() {
         return modelBrand;
     }
 
-    public void setModelBrand(ProductBrand modelBrand) {
+    public void setModelBrand(Brand modelBrand) {
         this.modelBrand = modelBrand;
     }
 

@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table()
 @EntityListeners(AuditingEntityListener.class)
-public class ProductBrand {
+public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)

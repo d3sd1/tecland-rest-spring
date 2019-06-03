@@ -1,7 +1,7 @@
 package TecLand.CRON.ScrapperMobile;
 
 import TecLand.Logger.LogService;
-import TecLand.ORM.Generic.Products.Templates.ProductTemplateMobile;
+import TecLand.ORM.Generic.Products.Templates.Mobile;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -40,7 +40,7 @@ public class KiMovil{
 
     private  void ScrapperMoviles(String link){
         if (getStatusConnectionCode(link) == 200) {
-            ProductTemplateMobile movil = new ProductTemplateMobile();
+            Mobile movil = new Mobile();
 
             Document document = getHtmlDocument(link);
             Element specs = document.getElementsByClass("kifeatures clear").get(0);
@@ -108,7 +108,7 @@ public class KiMovil{
             }
 
             movil.setWeight(Float.parseFloat(weight[1]));
-            movil.setScreenSize(Float.parseFloat(screen_size[0]));
+            //movil.setScreenSize(Float.parseFloat(screen_size[0]));
             //logger.info(movil.getScreenSize() + " " + movil.getWeight() + " " + brand[0] + " " + battery[0] + " " + ram[0] + " "+ memory[0] + " " + resolution + " "+ screen_tec + " " + dimensions_aux + " " + grosor + " " + resolution_frontcamera[0] + " " + resolution_backcamera[0] + " " + bluetooth[0] + " " + wifi + " " + NFC + " " + dualSim);
         }else{
             logger.warning(" ScrapperMoviles[KiMovil] : No conectando con " + link);

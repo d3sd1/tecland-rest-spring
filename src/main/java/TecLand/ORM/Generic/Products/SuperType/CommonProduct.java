@@ -1,12 +1,13 @@
-package TecLand.ORM.Generic.Products;
+package TecLand.ORM.Generic.Products.SuperType;
 
 import TecLand.ORM.Generic.Coords;
 import TecLand.ORM.Generic.Products.Generic.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @MappedSuperclass
-public class ProductTemplateCommon {
+public class CommonProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
@@ -19,10 +20,7 @@ public class ProductTemplateCommon {
     private ProductWorld productWorld;
 
     @OneToOne()
-    private ProductStatus productStatus;
-
-    @OneToOne()
-    private ProductBrand productBrand;
+    private Brand brand;
 
     @OneToOne()
     private ProductOS productOperatingSystem;
@@ -32,6 +30,25 @@ public class ProductTemplateCommon {
 
     @Column(nullable = false)
     private float weight = 0;
+
+    @Column(nullable = false)
+    private float screenSize = 0;
+
+    @OneToOne()
+    private ScreenType screenType;
+
+    @OneToOne()
+    private Battery battery;
+
+    @OneToOne()
+    private Memory ram;
+
+    @OneToOne()
+    private Memory rom;
+
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Camera.class)
+    @JoinColumn(name = "id")
+    private List<Camera> cameras;
 
     public void setWeight(float weight){
         if(weight<0){
@@ -68,19 +85,11 @@ public class ProductTemplateCommon {
         this.productWorld = productWorld;
     }
 
-    public ProductStatus getProductStatus() {
-        return productStatus;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setProductStatus(ProductStatus productStatus) {
-        this.productStatus = productStatus;
-    }
-
-    public ProductBrand getProductBrand() {
-        return productBrand;
-    }
-
-    public void setProductBrand(ProductBrand productBrand) {
-        this.productBrand = productBrand;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 }

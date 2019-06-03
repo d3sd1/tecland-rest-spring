@@ -1,6 +1,8 @@
 package TecLand.ORM.Generic.Products;
 
 import TecLand.ORM.Client.ClientUser;
+import TecLand.ORM.Generic.Products.Generic.ProductStatus;
+import TecLand.ORM.Generic.Products.Generic.ProductType;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -18,8 +20,8 @@ public class Sell {
     private ClientUser user;
 
     /*
-    NOTA: Para sacar la plantilla del producto, se coge de productType el tipo  (por ejemplo ProductTemplateMobile), y luego
-    con el productReferenceId puedes ir a la tabla directamente (por ejemplo ProductTemplateMobile) y buscar por dicha Id.
+    NOTA: Para sacar la plantilla del producto, se coge de productType el tipo  (por ejemplo Mobile), y luego
+    con el productReferenceId puedes ir a la tabla directamente (por ejemplo Mobile) y buscar por dicha Id.
      */
     @OneToOne()
     private ProductType productType;
@@ -35,6 +37,11 @@ public class Sell {
 
     @Column(nullable = false)
     private boolean acceptReturns;
+
+    // USED, NEW, REFURBISHED...
+
+    @OneToOne()
+    private ProductStatus productStatus;
 
     public long getId() {
         return id;

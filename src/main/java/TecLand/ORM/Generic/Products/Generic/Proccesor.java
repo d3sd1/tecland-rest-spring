@@ -19,7 +19,7 @@ public class Proccesor {
     @Column(nullable = false)
     private float bits;
 
-    @Column(nullable = false)
+    @OneToOne
     private Brand brand;
 
     @Column(nullable = false)
